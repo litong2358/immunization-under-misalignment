@@ -1,0 +1,65 @@
+name: clamp
+
+data:
+  primary_root: data/imagenet
+  harmful_root: data/cars
+  harmful_name: cars
+  harmful_train_split: ""
+  harmful_val_split: cars_test
+  adaptation_train_split: cars_train
+  harmful_num_classes: 196
+  batch_size: 128
+  num_workers: 4
+  image_size: 224
+
+model:
+  arch: resnet18
+  num_trainable_blocks: 2
+  harmful_head: heads/kmeans_cars.pt
+
+training:
+  epochs: 6
+  lr: 1.0e-5
+  peak_lr: 0.05
+  min_lr: 0.0
+  warmup_epochs: 5
+  cosine_t_initial: 90
+  momentum: 0.9
+  nesterov: true
+  classifier_weight_decay: 2.0e-5
+  pcgrad: true
+
+clamp:
+  inner_steps: 3
+  inner_lr: 1.0e-2
+  lambda_primary: 1.0
+  lambda_long: 1.0
+  lambda_ctr: 2.0
+  lambda_curv: 0.1
+  lambda_inv: 0.5
+  lambda_adapt: 1.0
+  lambda_progress: 0.0
+  lambda_expected: 0.0
+  lambda_slope: 0.0
+  lambda_ratio: 0.0
+  long_margin: 0.0
+  c_max: 0.8
+  c_clip: 0.1
+  tail_clip: 5.0
+  kappa_min: 3.0
+  curvature_reduction: mean
+  legacy_anchors: true
+  fd_eps: 1.0e-3
+  curvature_delta: 1.0e-3
+  subspace_rank: 4
+  contractivity_power_iters: 2
+
+adaptation:
+  epochs: 50
+  lr: 1.0e-2
+  momentum: 0.9
+  weight_decay: 1.0e-4
+  num_trainable_blocks: 0
+  dtype: float16
+  schedule: cos_decay
+  min_lr: 0.0

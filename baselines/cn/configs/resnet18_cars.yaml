@@ -1,0 +1,31 @@
+training:
+  max_epochs: 3
+  gpus: 1
+  precision: 32
+  log_every_n_steps: 1
+  logger:
+    project_name: "immu_cond_num"
+  callbacks:
+    checkpoint:
+      monitor: "train_loss"
+      mode: "min"
+      save_top_k: 1
+    early_stopping:
+      monitor: "train_loss"
+      mode: "min"
+      patience: 3
+data:
+  dataset_name: imagenet
+  batch_size: 64
+  d1_path: data/imagenet
+  d2_path: data/cars
+  d2_name: cars
+
+model:
+  task: "classification"
+  feature_extractor_type: "pt_imagenet"
+  feat_size: 512
+  lambda_kappa: 1
+  lambda_r1: 5e-5
+  lambda_r2: 2e6
+  lr: 1e-5

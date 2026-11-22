@@ -1,0 +1,37 @@
+# Artifacts (checkpoints, features, generated images, result files)
+# are large and are not tracked in this repository.
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Checkpoints and large tensors
+*.ckpt
+*.pt
+*.pth
+*.npy
+*.npz
+*.safetensors
+
+# Run outputs
+results/
+results_*/
+runs_*/
+logs/
+wandb/
+attack_data/
+
+# Generated figures and media (the static assets shipped under assets/ are kept)
+*.csv
+*.png
+*.jpg
+*.jpeg
+*.pdf
+!assets/*.png
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
